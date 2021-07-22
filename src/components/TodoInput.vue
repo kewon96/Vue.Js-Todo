@@ -18,10 +18,18 @@ export default {
     addTodo() {
       const newTodoItem = this.newTodoItem;
 
-      // localStorage에 저장
-      localStorage.setItem(newTodoItem, newTodoItem);
+      if (newTodoItem !== '') {
+        let obj = {
+          completed: false, // 완료여부(생성시엔 기본 false)
+          item: newTodoItem
+        };
 
-      this.clearInput();
+        // localStorage에 저장
+        localStorage.setItem(newTodoItem, JSON.stringify(obj));
+        this.clearInput();
+      }
+
+
     },
     clearInput() {
       this.newTodoItem = "";
@@ -30,34 +38,29 @@ export default {
 }
 </script>
 
-<style scoped>
-  input:focus {
-    outline: none;
-  }
+<style lang="sass" scoped>
+  input:focus
+    outline: none
 
-  .inputBox {
-    background: white;
-    height: 50px;
-    line-height: 50px;
-    border-radius: 5px;
-  }
+  .inputBox
+    background: white
+    height: 50px
+    line-height: 50px
+    border-radius: 5px
 
-  .inputBox input {
-    border-style: none;
-    font-size: 0.9rem;
-  }
+  .inputBox input
+    border-style: none
+    font-size: 0.9rem
 
-  .addContainer {
-    float: right;
-    background: linear-gradient(to right, #6478fb, #8763fb);
-    display: block;
-    width: 3rem;
-    border-radius: 0 5px 5px 0;
-  }
+  .addContainer
+    float: right
+    background: linear-gradient(to right, #6478fb, #8763fb)
+    display: block
+    width: 3rem
+    border-radius: 0 5px 5px 0
 
-  .addBtn {
-    color: white;
-    vertical-align: middle;
-  }
+  .addBtn
+    color: white
+    vertical-align: middle
 
 </style>
