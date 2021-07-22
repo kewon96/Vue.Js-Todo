@@ -1,7 +1,7 @@
 <template>
   <div>
     <ul>
-      <li v-for="( todoItem, index ) in todoItems" v-bind:key="todoItem" class="shadow">
+      <li v-for="( todoItem, index ) in todoItems" v-bind:key="todoItem.item" class="shadow">
         <span class="checkBtn" v-bind:class="{ checkBtnCompleted: todoItem.completed }" @click="checkItem(todoItem, index)">
           <i class="fas fa-check"></i>
         </span>
@@ -16,36 +16,16 @@
 
 <script>
 export default {
-  data() {
-    return {
-      todoItems: []
-    }
-  },
+  props: [ 'todoItems' ], // App.vue에서 props를 통해 전달받은 데이터
   methods: {
     removeTodo(item, i) {
-      // 지울 때 localStorage하고 todoItems 양쪽 다 삭제해야한다.
-      localStorage.removeItem(item);
-      this.todoItems.splice(i, 1);
-
+      this.$emit('removeTodo', item, i);
     },
     checkItem(item, i) {
-      item.completed = !item.completed;
-
-      // localStorage data update : removeItem -> setItem
-      localStorage.removeItem(item.item);
-      localStorage.setItem(item.item, JSON.stringify(item));
+      this.$emit('checkTodo', item, i);
     }
   },
-  created() {
-    // 인스턴스가 생성되자마자 생성
-    if(localStorage.length > 0) {
-      for (let i = 0; i < localStorage.length; i++) {
-        this.todoItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
 
-        // this.todoItems.push(localStorage.key(i));
-      }
-    }
-  },
 }
 </script>
 
