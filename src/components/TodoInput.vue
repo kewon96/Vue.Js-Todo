@@ -15,21 +15,15 @@ export default {
     }
   },
   methods: {
-    addTodo() {
+    addTodo() { // 버튼을 클릭하거나 Enter키를 눌렀을 때 동작
       const newTodoItem = this.newTodoItem;
 
       if (newTodoItem !== '') {
-        let obj = {
-          completed: false, // 완료여부(생성시엔 기본 false)
-          item: newTodoItem
-        };
-
-        // localStorage에 저장
-        localStorage.setItem(newTodoItem, JSON.stringify(obj));
+        // 입력한 데이터를 "addTodoItem"이라는 이벤트가 동작하게 되면서
+        // newTodoItem이라는 값이 같이 간다.
+        this.$emit('addTodo', newTodoItem);
         this.clearInput();
       }
-
-
     },
     clearInput() {
       this.newTodoItem = "";
