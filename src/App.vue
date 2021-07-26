@@ -29,6 +29,7 @@ export default {
         completed: false, // 완료여부(생성시엔 기본 false)
         item: todoItem // 전달받은 Item
       };
+
       localStorage.setItem(todoItem, JSON.stringify(obj));
       this.todoItems.push(obj);
     },
@@ -59,10 +60,10 @@ export default {
     }
   },
   components: {
-    'TodoHeader': TodoHeader,
-    'TodoInput' : TodoInput,
-    'TodoList' : TodoList,
-    'TodoFooter' : TodoFooter,
+    TodoHeader,
+    TodoInput,
+    TodoList,
+    TodoFooter,
   }
 }
 
