@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ul>
+    <transition-group name="list" tag="ul"> <!-- name : css class와 연관, tag : 명시한 tag에 해당 Animation을 이식 -->
       <li v-for="( todoItem, index ) in todoItems" v-bind:key="todoItem.item" class="shadow">
         <span class="checkBtn" v-bind:class="{ checkBtnCompleted: todoItem.completed }" @click="checkItem(todoItem, index)">
           <i class="fas fa-check"></i>
@@ -10,7 +10,7 @@
           <i class="fas fa-trash-alt"></i>
         </span>
       </li>
-    </ul>
+    </transition-group>
   </div>
 </template>
 
@@ -61,5 +61,22 @@ export default {
   .textCompleted
     text-decoration: line-through
     color: #b3adad
+
+  /*
+    List Item Transition Animation
+    Doce : https://v3.vuejs.org/guide/transitions-overview.html#class-based-animations-transitions
+   */
+
+  /* enter / leave가 동작할 때 */
+  .list-enter-active
+    transition: all 1s ease
+
+  .list-leave-active
+    transition: all 0.6s ease
+
+  .list-enter-from, /* enter 시작점 */
+  .list-leave-to    /* leave 종료점 */
+    opacity: 0
+    transform: translateY(30px)
 
 </style>
