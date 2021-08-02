@@ -20,6 +20,11 @@ export default new Vuex.Store({
         headerText: 'Todo!',
         todoItems: storage.fetch()
     },
+    getters: {
+      getTodoItems(state) {
+          return state.todoItems;
+      },
+    },
     mutations: {
         addItem(state, todoItem) {
             // TodoInput 컴포넌트에서 동작한 addTodoItem이벤트로 인해
@@ -32,15 +37,18 @@ export default new Vuex.Store({
             localStorage.setItem(todoItem, JSON.stringify(obj));
             state.todoItems.push(obj);
         },
-        removeItem(state, deleteMap) {
+        removeItem(state, payload) {
+            const i = payload.index;
+            const item = payload.todoItem;
+
             // 지울 때 localStorage하고 todoItems 양쪽 다 삭제해야한다.
             // 받아올 때 Proxy로 받아와지기 때문에 key값을 가지고 지워줘야한다.
-            localStorage.removeItem(deleteMap.item.item);
-            state.todoItems.splice(deleteMap.i, 1);
+            localStorage.removeItem(item.item);
+            state.todoItems.splice(i, 1);
         },
-        checkItem(state, checkMap) {
-            const item = checkMap.item;
-            const i = checkMap.i;
+        checkItem(state, payload) {
+            const i = payload.index;
+            const item = payload.todoItem;
 
             // TodoList에서 넘겨받은 item이 아니라 여기에 있는 todoItems의 데이터를 수정
             state.todoItems[i].completed = !state.todoItems[i].completed;

@@ -1,12 +1,12 @@
 <template>
   <div>
     <transition-group name="list" tag="ul"> <!-- name : css class와 연관, tag : 명시한 tag에 해당 Animation을 이식 -->
-      <li v-for="( todoItem, index ) in $store.state.todoItems" v-bind:key="todoItem.item" class="shadow">
-        <span class="checkBtn" v-bind:class="{ checkBtnCompleted: todoItem.completed }" @click="checkItem(todoItem, index)">
+      <li v-for="( todoItem, index ) in todoItems" v-bind:key="todoItem.item" class="shadow">
+        <span class="checkBtn" v-bind:class="{ checkBtnCompleted: todoItem.completed }" @click="checkTodo({ todoItem, index })">
           <i class="fas fa-check"></i>
         </span>
         <span v-bind:class="{ textCompleted: todoItem.completed }">{{ todoItem.item }}</span>
-        <span class="removeBtn" @click="removeTodo(todoItem, index)">
+        <span class="removeBtn" @click="removeTodo({ todoItem, index })">
           <i class="fas fa-trash-alt"></i>
         </span>
       </li>
@@ -15,16 +15,34 @@
 </template>
 
 <script>
+import { mapMutations, mapGetters } from 'vuex';
+
 export default {
   methods: {
-    removeTodo(item, i) {
-      this.$store.commit('removeItem', { item, i });
-    },
-    checkItem(item, i) {
-      this.$store.commit('checkItem', { item, i });
-    }
+    ...mapMutations({
+      removeTodo: 'removeItem',
+      checkTodo: 'checkItem'
+    })
   },
+  computed: {
+    /**
+     * 템플릿안에서는 깔끔하게,
+     * 깔끔하게 표현하기 위한 연산은 전부 JS에서 작업
+     */
+    // return this.$store.getters.getTodoItems;
 
+    /**
+     * 일반적인 사용방식
+     */
+    // ...mapGetters(['getTodoItems'])
+
+    /**
+     * 이름을 달리해주고싶을 때의 사용방식
+     */
+    ...mapGetters({
+      todoItems: 'getTodoItems'
+    })
+  }
 }
 </script>
 
