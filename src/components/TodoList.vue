@@ -1,7 +1,7 @@
 <template>
   <div>
     <transition-group name="list" tag="ul"> <!-- name : css class와 연관, tag : 명시한 tag에 해당 Animation을 이식 -->
-      <li v-for="( todoItem, index ) in todoItems" v-bind:key="todoItem.item" class="shadow">
+      <li v-for="( todoItem, index ) in $store.state.todoItems" v-bind:key="todoItem.item" class="shadow">
         <span class="checkBtn" v-bind:class="{ checkBtnCompleted: todoItem.completed }" @click="checkItem(todoItem, index)">
           <i class="fas fa-check"></i>
         </span>
@@ -16,13 +16,12 @@
 
 <script>
 export default {
-  props: [ 'todoItems' ], // App.vue에서 props를 통해 전달받은 데이터
   methods: {
     removeTodo(item, i) {
-      this.$emit('removeTodo', item, i);
+      this.$store.commit('removeItem', { item, i });
     },
     checkItem(item, i) {
-      this.$emit('checkTodo', item, i);
+      this.$store.commit('checkItem', { item, i });
     }
   },
 
@@ -32,7 +31,7 @@ export default {
 <style lang="sass" scoped>
   ul
     list-style-type: none
-    padding-left: 0px
+    padding-left: 0
     margin-top: 0
     text-align: left
 

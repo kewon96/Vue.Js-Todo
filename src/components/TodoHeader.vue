@@ -1,14 +1,12 @@
 <template>
   <header>
-    <h1>
-      Todo!
-    </h1>
+    <h1>{{ $store.state.headerText }}</h1>
   </header>
 </template>
 
 <script>
 export default {
-  name: "TodoHeader"
+  name: "TodoHeader",
 }
 </script>
 

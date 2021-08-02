@@ -47,7 +47,8 @@ export default {
       if (newTodoItem !== '') {
         // 입력한 데이터를 "addTodoItem"이라는 이벤트가 동작하게 되면서
         // newTodoItem이라는 값이 같이 간다.
-        this.$emit('addTodo', newTodoItem);
+        // this.$emit('addTodo', newTodoItem);
+        this.$store.commit('addItem', this.newTodoItem)
         this.clearInput();
       } else {
         this.showModal = !this.showModal;
